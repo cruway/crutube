@@ -2,6 +2,8 @@
   "name": "crutube",
   "version": "1.0.0",
   "main": "index.js",
+  "description": "Crutube create projects",
+  "author": "cruway",
   "scripts": {
     "win": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
