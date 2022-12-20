@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "description": "Crutube create projects",
-  "author": "cruway <astralkaiser89@gmail.com>",
+  "author": "cruway <astralkaiser89@gmail.com >",
   "scripts": {
     "dev": "babel-node index.js"
   },
