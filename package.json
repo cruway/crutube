@@ -1,11 +1,11 @@
 {
   "name": "crutube",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "description": "Crutube create projects",
   "author": "cruway <astralkaiser89@gmail.com >",
   "scripts": {
-    "dev": "nodemon --exec babel-node index.js"
+    "dev": "nodemon --exec babel-node src/server.js"
   },
   "keywords": [],
   "license": "MIT",
