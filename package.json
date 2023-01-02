@@ -5,7 +5,8 @@
   "description": "Crutube create projects",
   "author": "cruway <astralkaiser89@gmail.com >",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js"
+    "dev": "brew services start mongodb-community@6.0 && nodemon --exec babel-node src/init.js",
+    "stop": "brew services stop mongodb-community@6.0"
   },
   "keywords": [],
   "license": "MIT",
