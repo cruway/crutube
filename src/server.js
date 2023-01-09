@@ -5,6 +5,7 @@ import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 import session from "express-session";
 import {localsMiddleware} from "./middlewares";
+import MongoStore from "connect-mongo";
 
 const app = express();
 const logger = morgan("dev");
@@ -17,7 +18,8 @@ app.use(
     session({
         secret: "Hello!",
         resave: true,
-        saveUninitialized: true
+        saveUninitialized: true,
+        store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/crutube" })
     })
 );
 
