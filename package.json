@@ -6,6 +6,7 @@
   "author": "cruway <astralkaiser89@gmail.com >",
   "scripts": {
     "dev": "brew services start mongodb-community@6.0 && nodemon --exec babel-node src/init.js",
+    "assets": "webpack --config webpack.config.js",
     "stop": "brew services stop mongodb-community@6.0"
   },
   "keywords": [],
@@ -26,6 +27,9 @@
     "@babel/core": "^7.20.5",
     "@babel/node": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
-    "nodemon": "^2.0.20"
+    "babel-loader": "^9.1.2",
+    "nodemon": "^2.0.20",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
