@@ -1,6 +1,7 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
+import Video from "../models/Video";
 
 export const getJoin = (req, res) =>
     res.render("join", {pageTitle: "Join"});
@@ -175,12 +176,12 @@ export const getChangePassword = (req, res) => {
 export const postChangePassword = async (req, res) => {
     const {
         session: {
-            user: { _id, password },
+            user: {_id, password},
         },
         body: {oldPassword, newPassword, newPasswordConfirmation},
     } = req;
     const ok = await bcrypt.compare(oldPassword, password);
-    if(!ok) {
+    if (!ok) {
         return res.status(400).render("users/change-password", {
             pageTitle: "Change Password",
             errorMessage: "The current password is incorrect"
@@ -200,4 +201,11 @@ export const postChangePassword = async (req, res) => {
     return res.redirect("/users/logout");
 }
 
-export const see = (req, res) => res.send("See User");
+export const see = async (req, res) => {
+    const {id} = req.params;
+    const user = await User.findById(id).populate("videos");
+    if (!user) {
+        return res.status(404).render("404", {pageTitle: "User not found."});
+    }
+    return res.render("users/profile", {pageTitle: user.name, user});
+};
