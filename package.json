@@ -7,6 +7,7 @@
   "scripts": {
     "dev:server": "nodemon",
     "dev:assets": "webpack",
+    "devrun" : "brew services start mongodb-community@6.0 & webpack & nodemon",
     "dbstart": "brew services start mongodb-community@6.0",
     "dbstop": "brew services stop mongodb-community@6.0"
   },
