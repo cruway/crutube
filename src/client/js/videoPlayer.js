@@ -7,7 +7,7 @@ const volumeRange = document.getElementById("volume");
 let volumeValue = 0.5;
 video.volume = volumeValue;
 
-const handlePlayClick = (e) => {
+const handlePlayClick = () => {
     if (video.paused) {
         video.play();
     } else {
@@ -16,7 +16,7 @@ const handlePlayClick = (e) => {
     playBtn.innerText = video.paused ? "Play" : "Pause";
 };
 
-const handleMuteClick = (e) => {
+const handleMuteClick = () => {
     if (video.muted) {
         video.muted = false;
     } else {
