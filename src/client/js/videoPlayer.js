@@ -23,7 +23,7 @@ const handlePlayClick = () => {
     } else {
         video.pause();
     }
-    playBtn.classList = video.paused ? "fas fa-play" : "fas fa-pause";
+    playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
 };
 
 const handleMuteClick = () => {
