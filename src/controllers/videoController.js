@@ -89,7 +89,7 @@ export const deleteVideo = async (req, res) => {
     } = req.session;
     const video = await Video.findById(id);
     const user = await User.findById(_id);
-    if(!video) {
+    if (!video) {
         return res.status(404).render("404", {pageTitle: "Video not found."});
     }
     if (String(video.owner) !== String(_id)) {
@@ -113,3 +113,14 @@ export const search = async (req, res) => {
     }
     return res.render("search", {pageTitle: "Search", videos});
 }
+
+export const registerView = async (req, res) => {
+    const {id} = req.params;
+    const video = await Video.findById(id);
+    if (!video) {
+        return res.sendStatus(404);
+    }
+    video.meta.views = video.meta.views + 1;
+    await video.save();
+    return res.sendStatus(200);
+};
