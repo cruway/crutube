@@ -90,9 +90,10 @@ const handleMouseMove = () => {
     }
     if (controlsMovementTimeout) {
         clearTimeout(controlsMovementTimeout);
-        controlsMovementTimeout = setTimeout(hideControls, 3000);
+        controlsMovementTimeout = null;
     }
     videoControls.classList.add("showing");
+    controlsMovementTimeout = setTimeout(hideControls, 3000);
 };
 
 const handleMouseLeave = () => {
