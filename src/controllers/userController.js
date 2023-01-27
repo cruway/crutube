@@ -1,11 +1,9 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
-import Video from "../models/Video";
 
 export const getJoin = (req, res) =>
     res.render("join", {pageTitle: "Join"});
-
 export const postJoin = async (req, res) => {
     const {name, username, email, password, password2, location} = req.body;
     const pageTitle = "Join";
@@ -138,6 +136,7 @@ export const finishGithubLogin = async (req, res) => {
 
 export const logout = (req, res) => {
     req.session.destroy();
+    req.flash("info", "Bye Bye");
     return res.redirect("/");
 };
 
@@ -168,6 +167,7 @@ export const postEdit = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
     if (req.session.user.socialOnly === true) {
+        req.flash("error", "Can't change password.");
         return res.redirect("/");
     }
     return res.render("users/change-password", {pageTitle: "Change Password"});
@@ -176,11 +176,12 @@ export const getChangePassword = (req, res) => {
 export const postChangePassword = async (req, res) => {
     const {
         session: {
-            user: {_id, password},
+            user: {_id},
         },
         body: {oldPassword, newPassword, newPasswordConfirmation},
     } = req;
-    const ok = await bcrypt.compare(oldPassword, password);
+    const user = await User.findById(_id);
+    const ok = await bcrypt.compare(oldPassword, user.password);
     if (!ok) {
         return res.status(400).render("users/change-password", {
             pageTitle: "Change Password",
@@ -193,11 +194,9 @@ export const postChangePassword = async (req, res) => {
             errorMessage: "The password does not match the confirmation"
         });
     }
-    const user = await User.findById(_id);
     user.password = newPassword;
     await user.save();
-    req.session.user.password = user.password;
-    // send notification
+    req.flash("info", "Password updated");
     return res.redirect("/users/logout");
 }
 

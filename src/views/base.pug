@@ -1,7 +1,15 @@
+include mixins/message
+
 doctype html
 html(lang="en")
     include partials/head
     body
+        if messages.error
+            +messages("error", messages.error)
+        if messages.info
+            +messages("info", messages.info)
+        if messages.success
+            +messages("success", messages.success)
         include partials/header
         main
             block content
