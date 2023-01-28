@@ -73,9 +73,8 @@ if (form) {
 }
 
 const handleDelete = async (event) => {
-    console.log(event)
-    console.log(event.dataset);
-    const parentList = event.path[2];
+    const path = (event.composedPath && event.composedPath()) || event.path;
+    const parentList = path[2];
     const commentId = parentList.dataset.id;
     const response = await fetch(`/api/comments/${commentId}/delete`, {
         method: "DELETE",
@@ -100,9 +99,10 @@ if (deleteBtns) {
 }
 
 const handleEdit = async (event) => {
-    const commentText = event.path[2].children[1];
+    const path = (event.composedPath && event.composedPath()) || event.path;
+    const commentText = path[2].children[1];
     const text = commentText.innerText;
-    const commentId = event.path[2].dataset.id;
+    const commentId = path[2].dataset.id;
     const response = await fetch(`/api/videos/${commentId}/edit`, {
         method: "POST",
         headers: {
@@ -124,7 +124,8 @@ const handleEdit = async (event) => {
 };
 
 const handleEditBtn = (event) => {
-    const commentText = event.path[2].children[1];
+    const path = (event.composedPath && event.composedPath()) || event.path;
+    const commentText = path[2].children[1];
     commentText.classList.add("edit-line");
     commentText.contentEditable = true;
     event.target.innerText = " ✅";
