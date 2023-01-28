@@ -2,19 +2,89 @@
   margin-top: 20px;
   display: flex;
   flex-direction: column;
+
   .video__title {
     font-size: 26px;
     margin-bottom: 5px;
   }
+
   .video__createdAt {
     font-size: 12px;
   }
+
   .video__owner {
     margin-bottom: 5px;
     font-size: 14px;
+
     a {
       color: cornflowerblue;
       text-decoration: underline;
+    }
+  }
+
+  a {
+    display: contents;
+  }
+}
+
+#counting-area {
+  display: flex;
+  justify-content: end;
+  margin: 30px;
+
+  span {
+    font-size: 20px;
+  }
+}
+
+.video__comments {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+  justify-content: center;
+
+  .video__comment {
+    padding: 10px;
+    min-height: 20px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    i {
+      width: 10px;
+    }
+
+    .comment__text {
+      display: block;
+      width: 230px;
+      word-wrap: break-word;
+    }
+
+    .edit-line {
+      border-bottom: 1px solid black;
+    }
+
+    .comment__controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 38px;
+
+      .button__edit {
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .button__delete {
+        margin-left: 5px;
+        cursor: pointer;
+      }
     }
   }
 }

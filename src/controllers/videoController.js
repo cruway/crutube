@@ -1,5 +1,6 @@
 import Video from "../models/Video";
 import User from "../models/User";
+import Comment from "../models/Comment";
 
 export const home = async (req, res) => {
     const videos = await Video.find({}).sort({createdAt: "desc"}).populate("owner");
@@ -8,7 +9,7 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
     const {id} = req.params;
-    const video = await Video.findById(id).populate("owner");
+    const video = await Video.findById(id).populate("owner").populate("comments");
     if (!video) {
         return res.status(404).render("404", {pageTitle: "Video not found."});
     }
@@ -124,6 +125,70 @@ export const registerView = async (req, res) => {
     return res.sendStatus(200);
 };
 
-export const createComment = (req, res) => {
-    return res.end();
+export const createComment = async (req, res) => {
+    const {
+        session: {user},
+        body: {text},
+        params: {id}
+    } = req;
+
+    const video = await Video.findById(id);
+    if (!video) {
+        return res.sendStatus(404);
+    }
+    const userModel = await User.findById(user._id);
+    if(!userModel) {
+        return res.sendStatus(404);
+    }
+    const comment = await Comment.create({
+        text,
+        owner: user._id,
+        video: id,
+    });
+    video.comments.push(comment._id);
+    userModel.comments.push(comment._id);
+    video.save();
+    return res.status(201).json({newCommentId: comment._id});
 }
+
+export const editComment = async (req, res) => {
+    const {
+        body: {text},
+        params: {commentId: id},
+        session: {
+            user: {_id: userId}
+        }
+    } = req;
+    const comment = await Comment.findById(id).populate("owner");
+    if(userId !== String(comment.owner._id)) {
+        return res.sendStatus(403);
+    }
+    await Comment.findByIdAndUpdate(id, {
+        text
+    });
+    return res.sendStatus(200);
+}
+
+export const deleteComment = async (req, res) => {
+    const {
+        params: {commentId},
+        session: {
+            user: {_id: userId}
+        }
+    } = req;
+    const comment = await Comment.findById(commentId).populate("owner");
+    const videoId = comment.video;
+    if(userId !== String(comment.owner._id)) {
+        return res.sendStatus(403);
+    }
+    await Video.updateOne(
+        {_id: videoId},
+        {$pullAll: {comments: [commentId]}}
+    );
+    await User.updateOne(
+        {_id: userId},
+        {$pullAll: {comments: [commentId]}}
+    );
+    await Comment.findByIdAndDelete(commentId);
+    return res.sendStatus(200);
+};
