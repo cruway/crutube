@@ -1,4 +1,4 @@
-# fly.toml file generated for crutube on 2023-01-29T22:01:32+09:00
+# fly.toml file generated for crutube on 2023-01-29T22:41:13+09:00
 
 app = "crutube"
 kill_signal = "SIGINT"
