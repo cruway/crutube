@@ -15,6 +15,7 @@
     "dbstart": "brew services start mongodb-community@6.0",
     "dbstop": "brew services stop mongodb-community@6.0"
   },
+  "author" : "cruway<astralkaiser89@gmail.com>",
   "keywords": [],
   "license": "MIT",
   "dependencies": {
