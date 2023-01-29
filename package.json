@@ -6,7 +6,11 @@
   "author": "cruway <astralkaiser89@gmail.com >",
   "scripts": {
     "dev:server": "nodemon",
-    "dev:assets": "webpack",
+    "dev:assets": "webpack --mode=production -w",
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets",
+    "build:server": "babel src -d build",
+    "build:assets": "webpack --mode=production",
     "devrun": "brew services start mongodb-community@6.0 & webpack & nodemon",
     "dbstart": "brew services start mongodb-community@6.0",
     "dbstop": "brew services stop mongodb-community@6.0"
@@ -30,7 +34,8 @@
     "regenerator-runtime": "^0.13.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.5",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "@babel/node": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
     "babel-loader": "^9.1.2",
