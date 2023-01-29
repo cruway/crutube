@@ -9,7 +9,7 @@
     "dev:assets": "webpack --mode=production -w",
     "start": "node build/init.js",
     "build": "npm run build:server && npm run build:assets",
-    "build:server": "babel src -d build --ignore src/client",
+    "build:server": "babel src -d build",
     "build:assets": "webpack --mode=production",
     "devrun": "brew services start mongodb-community@6.0 & webpack & nodemon",
     "dbstart": "brew services start mongodb-community@6.0",
